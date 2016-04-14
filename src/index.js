@@ -1,49 +1,35 @@
 // server, routing, and responding to requests
 
-var assert = require('assert');
-
+var C = require('./const.js');
 var express = require('express');
 var app = express();
 var fs = require('fs');
 
-app.get('/', function (request, response) {
+var assert = require('assert');
+
+// routing
+function handleResponse(response, data) {
+	console.log(data);
+	response.end(JSON.stringify(data));
+}
+app.get(C.ROUTE.ROOT, function (request, response) {
    fs.readFile(__dirname + "/" + "users.json", 'utf8', function (err, data) {
        console.log( data );
        response.end( data );
    });
 });
-
-app.get('/near', function (request, response) {
-  var db = require('./db.js');
-  db.nearby(respond, response);
+app.get(C.ROUTE.NEAR, function (request, response) {
+  var db = require(C.DB);
+  db.nearby(handleResponse, response);
 });
 
-function respond(response, data)
-{
-	console.log(data);
-	response.end(JSON.stringify(data));
-}
-
-var server = app.listen(8081, function () {
+// server start
+var server = app.listen(C.PORT.MAIN, function () {
   var host = server.address().address
   var port = server.address().port
   console.log("Example app listening at http://%s:%s", host, port)
   
-  var db = require('./db.js');
-  db.execute(insert_data);
+  var db = require(C.DB);
+  var test = require(C.TEST);
+  db.execute(test.insert_data);
 });
-
-function insert_data (err, db)
-{
-	if (err) {
-		console.log('Unable to connect to the mongoDB server. Error:', err);
-	} else {
-		var people = require('./people.js');
-		people.test(db, people.nearby(db, 1, 4, log, null));
-	}
-}
-
-function log(response, data)
-{
-	console.log("Test Data inserted");
-}
