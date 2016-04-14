@@ -17,38 +17,44 @@ execute : function (callback) {
 	});
 },
 
-results_multiple : function(err, result, db, logMethod, response) {
+results : function(err, result, db, logMethod, response) {
 	var r = {};
 	if (err) {
 		r.err = err;
-		r.success = false;
+		r.ok = false;
 		r.results = null;
-		r.count = 0;
 	}
 	if (result != null) {
-		r.success = true;
+		r.ok = true;
 		r.results = result.results;
-		r.count = result.results.length;
 	} else {
-		r.success = true;
+		r.ok = true;
 		r.results = null;
-		r.count = 0;
 	}
 	db.close();
 	logMethod(response, r);
 },
 
-results_single : function(err, data, db, logMethod, response) {
+results_obj : function(err, data, db, logMethod, response) {
 	var r = {};
 	if (err) {
 		r.err = err;
-		r.success = false;
+		r.ok = false;
 		r.results = null;
-		r.count = 0;
 	} else {
-		r.success = true;
+		r.ok = true;
 		r.results = data;
-		r.count = 1;
+	}
+	db.close();
+	logMethod(response, r);
+},
+
+results_ok : function(err, data, db, logMethod, response) {
+	var r = {};
+	if (err) {
+		r.ok = false;
+	} else {
+		r.ok = true;
 	}
 	db.close();
 	logMethod(response, r);

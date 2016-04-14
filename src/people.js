@@ -16,7 +16,7 @@ nearby : function(db, place, distance, limit, logMethod, response) {
 	var people = db.collection(C.NAME.PEOPLE);
 	people.geoNear(place.location[0], place.location[1], {maxDistance:distance, limit:limit}, function(err, result) {
 		var DAL = require(C.DAL);
-		DAL.results_multiple(err, result, db, logMethod, response);
+		DAL.results(err, result, db, logMethod, response);
 	});
 },
 
@@ -24,7 +24,7 @@ add : function (db, place, logMethod, response){
 	var collection = db.collection(C.NAME.PEOPLE);
 	collection.insert(module.exports.create(place.location[0], place.location[1]), function(err, result) {
 		var DAL = require(C.DAL);
-		DAL.results_single(err, place, db, logMethod, response);
+		DAL.results_ok(err, place, db, logMethod, response);
 	});
 },
 

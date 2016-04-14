@@ -86,11 +86,11 @@ all : function (logMethod, response) {
 		people.find().toArray(function(err, items) {
 			var r = {};
 			if (items != null) {
-				r.results = items;
 				r.count = items.length;
+				r.results = items;
 			} else {
-				r.results = null;
 				r.count = 0;
+				r.results = null;
 			}
 			db.close();
 			logMethod(response, r);

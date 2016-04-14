@@ -32,18 +32,18 @@ function assert_equal(expected, actual, message) {
 }
 
 // WebAPI TEST SUITE
-function api_all_data (jsonObj) {
-    assert_equal(20, jsonObj.count, "api_all_data");
+function api_all_data (json) {
+    assert_equal(20, json.results.length, "api_all_data");
 }
-function api_nearby_limits (jsonObj) {
-	assert_equal(2, jsonObj.count, "api_nearby_limits");
+function api_nearby_limits (json) {
+	assert_equal(2, json.results.length, "api_nearby_limits");
 }
 
 // DB TEST SUITE
 function people_nearby_limits(db) {
 	var people = require(C.PEOPLE);
-	people.nearby(db, C.RALEIGH, 1, 2, function (response,data) {
-		assert_equal(2, data.count, "test_people_nearby_limits");
+	people.nearby(db, C.RALEIGH, 1, 2, function (response, json) {
+		assert_equal(2, json.results.length, "test_people_nearby_limits");
 	}, null);
 }
 function people_add_remove(db) {
