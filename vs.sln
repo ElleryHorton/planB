@@ -5,11 +5,13 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BB9699DD-FF9F-4F0B-9D42-44F83ECB454C}"
 	ProjectSection(SolutionItems) = preProject
+		src\db.js = src\db.js
 		src\index.js = src\index.js
 		src\map.html = src\map.html
 		src\package.json = src\package.json
 		src\people.js = src\people.js
 		src\readme.txt = src\readme.txt
+		src\users.json = src\users.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{B4878A8E-2689-4C56-9991-5E90AFD56B65}"
