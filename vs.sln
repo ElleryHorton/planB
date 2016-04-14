@@ -8,10 +8,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BB9699DD-FF9
 		src\index.js = src\index.js
 		src\map.html = src\map.html
 		src\package.json = src\package.json
+		src\people.js = src\people.js
+		src\readme.txt = src\readme.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{B4878A8E-2689-4C56-9991-5E90AFD56B65}"
+	ProjectSection(SolutionItems) = preProject
+		src\ui\location.js = src\ui\location.js
+		src\ui\marker.js = src\ui\marker.js
+		src\ui\util.js = src\ui\util.js
 	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B4878A8E-2689-4C56-9991-5E90AFD56B65} = {BB9699DD-FF9F-4F0B-9D42-44F83ECB454C}
 	EndGlobalSection
 EndGlobal

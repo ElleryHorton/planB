@@ -17,6 +17,9 @@
   </head>
   <body>
     <div id="map"></div>
+	<script src="js\util.js"></script>
+	<script src="js\marker.js"></script>
+	<script src="js\location.js"></script>
     <script>
       // Note: This example requires that you consent to location sharing when
       // prompted by your browser. If you see the error "The Geolocation service
@@ -24,23 +27,9 @@
       // locate you.
 
       function initMap() {
-        var raleigh = new google.maps.LatLng(35.7796, -78.6382);
-        var raleigh1 = new google.maps.LatLng(35.77, -78.63);
-        var raleigh2 = new google.maps.LatLng(35.7, -78.7);
-        var mapOptions = {
-            zoom: 12,
-            center: raleigh
-        }
-        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        var marker1 = new google.maps.Marker({
-            position: raleigh1,
-            title:"Hello World1!"
-        });
-        var marker2 = new google.maps.Marker({
-            position: raleigh2,
-            title: "Hello World2!"
-        });
-        var marker = new google.maps.Marker({map: map});
+		//var raleigh = { lat : 35.7796, lng : -78.6382 };
+		//var map = getMap(raleigh, ZOOM.CLOSE);
+		//var arr = createLocations(raleigh, 20, 0, 10, SPACING.CLOSE);
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -50,10 +39,14 @@
               lng: position.coords.longitude
             };
 
+			var map = getMap(pos, ZOOM.CLOSE);
+			var arr = createLocations(pos, 20, 0, 10, SPACING.CLOSE);
+			var center = createMarker("center", pos.lat, pos.lng, MARKER.blue);
             map.setCenter(pos);
-            marker.setMap(map);
-            marker1.setMap(map);
-            marker2.setMap(map);
+			arr.forEach(function (marker) {
+				marker.setMap(map);
+			});
+			center.setMap(map);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
