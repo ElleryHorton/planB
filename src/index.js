@@ -15,17 +15,17 @@ app.get(C.ROUTE.ROOT, function (request, response) {
    });
 });
 app.get(C.ROUTE.NEAR, function (request, response) {
-  var db = require(C.DB);
-  db.nearby(handleResponse, response);
+  var core = require(C.CORE);
+  core.nearby(handleResponse, response);
 });
 app.get(C.ROUTE.ALL, function (request, response) {
   var testdata = require(C.TESTDATA);
   testdata.all(handleResponse, response);
 });
 app.get(C.ROUTE.ADD, function (request, response) {
-  var db = require(C.DB);
+  var core = require(C.CORE);
   var testdata = require(C.TESTDATA);
-  db.add(testdata.LatLng, handleResponse, response);
+  core.add(testdata.LatLng, handleResponse, response);
 });
 
 // server start

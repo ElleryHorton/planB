@@ -2,7 +2,8 @@
 
 module.exports = {
 
-DB			: "./db.js",
+CORE		: "./core.js",
+DAL			: "./dal.js",
 TESTDATA	: "./testdata.js",
 TESTS		: "./tests.js",
 PEOPLE		: "./people.js",

@@ -15,43 +15,16 @@ module.exports = {
 nearby : function(db, place, distance, limit, logMethod, response) {
 	var people = db.collection(C.NAME.PEOPLE);
 	people.geoNear(place.location[0], place.location[1], {maxDistance:distance, limit:limit}, function(err, result) {
-		var r = {};
-		if (err) {
-			r.err = err;
-			r.success = false;
-			r.results = null;
-			r.count = 0;
-		}
-		if (result != null) {
-			r.success = true;
-			r.results = result.results;
-			r.count = result.results.length;
-		} else {
-			r.success = true;
-			r.results = null;
-			r.count = 0;
-		}
-		db.close();
-		logMethod(response, r);
+		var DAL = require(C.DAL);
+		DAL.results_multiple(err, result, db, logMethod, response);
 	});
 },
 
 add : function (db, place, logMethod, response){
 	var collection = db.collection(C.NAME.PEOPLE);
 	collection.insert(module.exports.create(place.location[0], place.location[1]), function(err, result) {
-		var r = {};
-		if (err) {
-			r.err = err;
-			r.success = false;
-			r.results = null;
-			r.count = 0;
-		} else {
-			r.success = true;
-			r.results = place;
-			r.count = 1;
-		}
-		db.close();
-		logMethod(response, r);
+		var DAL = require(C.DAL);
+		DAL.results_single(err, place, db, logMethod, response);
 	});
 },
 

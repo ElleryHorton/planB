@@ -80,8 +80,8 @@ insert : function (db) {
 },
 
 all : function (logMethod, response) {
-	var db = require(C.DB);
-	db.execute(function (db) {
+	var DAL = require(C.DAL);
+	DAL.execute(function (db) {
 		var people = db.collection(C.NAME.PEOPLE);
 		people.find().toArray(function(err, items) {
 			var r = {};

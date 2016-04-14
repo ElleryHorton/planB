@@ -22,8 +22,8 @@ function testWebAPI(testMethod, path) {
 }
 
 function testDB(testMethod) {
-	var db = require(C.DB);
-	db.execute(testMethod);
+	var DAL = require(C.DAL);
+	DAL.execute(testMethod);
 }
 
 function assert_equal(expected, actual, message) {
