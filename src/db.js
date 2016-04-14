@@ -2,12 +2,6 @@
 
 var C = require('./const.js');
 
-function nearby (db, logMethod, response) {
-	var people = require(C.PEOPLE);
-	// this is where the magic will end
-	people.nearby(db, 1, 2, logMethod, response);
-}
-
 module.exports = {
 
 execute : function (callback) {
@@ -25,10 +19,19 @@ execute : function (callback) {
 
 nearby : function (logMethod, response) {
 	module.exports.execute(function (db) {
-		// this is where the magic will start (LatLng API)
-		nearby(db, logMethod, response);
-	}
-	);
+		var people = require(C.PEOPLE);
+		people.nearby(db, C.RALEIGH, 1, 2, logMethod, response);
+	});
+},
+
+add : function (LatLng, logMethod, response) {
+	var places = require(C.PLACES);
+	var place = places.toPlace(LatLng);
+	
+	module.exports.execute(function (db) {
+		var people = require(C.PEOPLE);
+		people.add(db, place, logMethod, response);
+	});
 }
 
 }
