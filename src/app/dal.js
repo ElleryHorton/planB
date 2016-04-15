@@ -1,6 +1,6 @@
 // db pass-thru layer to handle connecting and errors
 
-var C = require('./const.js');
+var C = require('../const.js');
 
 module.exports = {
 

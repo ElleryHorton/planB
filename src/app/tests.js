@@ -1,6 +1,6 @@
 // tests
 
-var C = require('./const.js');
+var C = require('../const.js');
 var assert = require('assert');
 
 function testWebAPI(testMethod, path) {
@@ -28,7 +28,7 @@ function testDB(testMethod) {
 
 function assert_equal(expected, actual, message) {
 	assert.equal(expected, actual);
-	console.log("passed: ", message);
+	console.log("passed:", message);
 }
 
 // WebAPI TEST SUITE

@@ -1,6 +1,6 @@
 // business logic layer
 
-var C = require('./const.js');
+var C = require('../const.js');
 
 function random(min, max) {
 	return Math.floor((Math.random() * max) + min); 

@@ -1,11 +1,10 @@
 // test data library
 
-var C = require('./const.js');
+var C = require('../const.js');
 
-function test_data_done(response, data) {
+function log_test_data_inserted(response, data) {
 	console.log("Test Data inserted");
 }
-
 
 function randomNumber(min, max, format) {
 	var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
@@ -68,15 +67,24 @@ LatLng : {
 	lng : function() { return C.RALEIGH.location[1]; }
 },
 
-insert : function (db) {
+purge : function (db) {
 	var people = require(C.PEOPLE);
 	var collection = db.collection(C.NAME.PEOPLE);
 	collection.drop();
-	collection.createIndex(
-		//{location: "2d"}, insertPeopleInto(
-		{location: "2d"}, insertPlacesInto(
-			collection, people.nearby(db, C.RALEIGH, 1, 4, test_data_done, null))
-	);
+	console.log("Test Data purged");
+	db.close();
+},
+
+insert : function (db) {
+	var people = require(C.PEOPLE);
+	var collection = db.collection(C.NAME.PEOPLE);
+	collection.drop(function (err, response) {
+		collection.createIndex(
+			//{location: "2d"}, insertPeopleInto(
+			{location: "2d"}, insertPlacesInto(
+				collection, people.nearby(db, C.RALEIGH, 1, 4, log_test_data_inserted, null))
+		);
+	});
 },
 
 all : function (logMethod, response) {

@@ -5,23 +5,35 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BB9699DD-FF9F-4F0B-9D42-44F83ECB454C}"
 	ProjectSection(SolutionItems) = preProject
+		src\.gitignore = src\.gitignore
 		src\const.js = src\const.js
-		src\core.js = src\core.js
-		src\dal.js = src\dal.js
-		src\index.js = src\index.js
-		src\init.js = src\init.js
-		src\map.html = src\map.html
 		src\package.json = src\package.json
-		src\people.js = src\people.js
-		src\places.js = src\places.js
 		src\readme.txt = src\readme.txt
+		src\run.base.bat = src\run.base.bat
 		src\run.bat = src\run.bat
-		src\testdata.js = src\testdata.js
-		src\tests.js = src\tests.js
-		src\users.json = src\users.json
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{B4878A8E-2689-4C56-9991-5E90AFD56B65}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{F5B5E31C-1E0E-4D7E-B3B0-C35C3C651D92}"
+	ProjectSection(SolutionItems) = preProject
+		src\app\core.js = src\app\core.js
+		src\app\dal.js = src\app\dal.js
+		src\app\index.js = src\app\index.js
+		src\app\map.html = src\app\map.html
+		src\app\people.js = src\app\people.js
+		src\app\places.js = src\app\places.js
+		src\app\testdata.js = src\app\testdata.js
+		src\app\tests.js = src\app\tests.js
+		src\app\users.json = src\app\users.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2C7CFEBC-E533-41BE-B2EB-E9BF7A32D2C3}"
+	ProjectSection(SolutionItems) = preProject
+		src\tests\_init.js = src\tests\_init.js
+		src\tests\_purge.js = src\tests\_purge.js
+		src\tests\add.js = src\tests\add.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{74682055-8BF5-44A2-A177-8E14486C88C9}"
 	ProjectSection(SolutionItems) = preProject
 		src\ui\location.js = src\ui\location.js
 		src\ui\marker.js = src\ui\marker.js
@@ -33,6 +45,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{B4878A8E-2689-4C56-9991-5E90AFD56B65} = {BB9699DD-FF9F-4F0B-9D42-44F83ECB454C}
+		{F5B5E31C-1E0E-4D7E-B3B0-C35C3C651D92} = {BB9699DD-FF9F-4F0B-9D42-44F83ECB454C}
+		{2C7CFEBC-E533-41BE-B2EB-E9BF7A32D2C3} = {BB9699DD-FF9F-4F0B-9D42-44F83ECB454C}
+		{74682055-8BF5-44A2-A177-8E14486C88C9} = {BB9699DD-FF9F-4F0B-9D42-44F83ECB454C}
 	EndGlobalSection
 EndGlobal

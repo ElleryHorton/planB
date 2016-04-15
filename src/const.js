@@ -2,24 +2,30 @@
 
 module.exports = {
 
-CORE		: "./core.js",
-DAL			: "./dal.js",
-TESTDATA	: "./testdata.js",
-TESTS		: "./tests.js",
-PEOPLE		: "./people.js",
-PLACES		: "./places.js",
+// libraries
+CORE		: "../app/core.js",
+DAL			: "../app/dal.js",
+TESTDATA	: "../app/testdata.js",
+TESTS		: "../app/tests.js",
+PEOPLE		: "../app/people.js",
+PLACES		: "../app/places.js",
+
 NAME		: {
-	PEOPLE : "people"
+			PEOPLE	: "people"
 },
-ROUTE	: {
-	ROOT : "/",
-	NEAR : "/near",
-	ALL	 : "/all",
-	ADD	 : "/add"
+
+// webserver config
+ROUTE		: {
+			ROOT	: "/",
+			NEAR	: "/near",
+			ALL	: "/all",
+			ADD	: "/add"
 },
-PORT	: {
-	MAIN : 8081
+PORT		: {
+			MAIN	: 8081
 },
-RALEIGH : { name: "Raleigh", location: [35.7796, -78.6382] }
+
+// locations
+RALEIGH		: { name: "Raleigh", location: [35.7796, -78.6382] }
 
 }

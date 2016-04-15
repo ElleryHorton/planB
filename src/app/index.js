@@ -1,6 +1,6 @@
 // server, routing, and responding to requests
 
-var C = require('./const.js');
+var C = require('../const.js');
 var express = require('express');
 var app = express();
 var fs = require('fs');

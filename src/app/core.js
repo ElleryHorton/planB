@@ -1,6 +1,6 @@
 // business logic and integration layer
 
-var C = require('./const.js');
+var C = require('../const.js');
 var DAL = require(C.DAL);
 
 module.exports = {

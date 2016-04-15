@@ -1,2 +1,2 @@
-node init.js
-node index.js
+@start run.base.bat
+@exit
