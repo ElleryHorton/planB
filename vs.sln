@@ -30,6 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2C7CFEBC
 	ProjectSection(SolutionItems) = preProject
 		src\tests\_init.js = src\tests\_init.js
 		src\tests\_purge.js = src\tests\_purge.js
+		src\tests\_setup.js = src\tests\_setup.js
 		src\tests\add.js = src\tests\add.js
 	EndProjectSection
 EndProject

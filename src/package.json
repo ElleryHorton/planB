@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "npm": "^2.15.0",
-    "mongodb": "~2.0"
+    "mongodb": "~2.1.16"
   },
   "devDependencies": {},
   "scripts": {

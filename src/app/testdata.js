@@ -3,7 +3,7 @@
 var C = require('../const.js');
 
 function log_test_data_inserted(response, data) {
-	console.log("Test Data inserted");
+	C.LOG.LOW("Test Data inserted");
 }
 
 function randomNumber(min, max, format) {
@@ -71,20 +71,24 @@ purge : function (db) {
 	var people = require(C.PEOPLE);
 	var collection = db.collection(C.NAME.PEOPLE);
 	collection.drop();
-	console.log("Test Data purged");
+	C.LOG.LOW("Test Data purged");
 	db.close();
+},
+
+setup : function (db) {
+    var people = require(C.PEOPLE);
+    var collection = db.collection(C.NAME.PEOPLE);
+    collection.createIndex({ location: "2d" }, { background: false });
+    C.LOG.LOW("Index Created: { location: \"2d\" }");
+    db.close();
 },
 
 insert : function (db) {
 	var people = require(C.PEOPLE);
 	var collection = db.collection(C.NAME.PEOPLE);
-	collection.drop(function (err, response) {
-		collection.createIndex(
-			//{location: "2d"}, insertPeopleInto(
-			{location: "2d"}, insertPlacesInto(
-				collection, people.nearby(db, C.RALEIGH, 1, 4, log_test_data_inserted, null))
-		);
-	});
+    //insertPeopleInto(
+	insertPlacesInto(collection,
+        people.nearby(db, C.RALEIGH, 1, 4, log_test_data_inserted, null));
 },
 
 all : function (logMethod, response) {

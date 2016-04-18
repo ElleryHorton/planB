@@ -3,7 +3,7 @@ var assert = require('assert');
 
 function assert_notEqual(expected, actual, message) {
     assert.notEqual(expected, actual);
-    console.log("passed: ", message);
+    C.LOG.PASS(message);
 }
 
 function verifyLocationExists(response, data) {
@@ -11,7 +11,7 @@ function verifyLocationExists(response, data) {
 	var location = data.results[0].location;
 	assert.notEqual(location, null);
 	assert.equal(2, location.length);
-	console.log("passed: test_add_LatLng");
+	C.LOG.PASS("test_add_LatLng");
 }
 
 function testAdd(response, data) {

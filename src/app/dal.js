@@ -10,7 +10,7 @@ execute : function (callback) {
 	var url = 'mongodb://nc-dev-1028:27017/test';
 	MongoClient.connect(url, function (err, db) {
 		if (err) {
-			console.log('Execute failed. Error:', err);
+			C.LOG.ERR(err);
 		} else {
 			callback(db);
 		}

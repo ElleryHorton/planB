@@ -9,7 +9,7 @@ run : function () {
 	testWebAPI(api_all_data, '/all');
 	testWebAPI(api_near, '/near');
 	testWebAPI(api_near_place, '/near?lat=35.78&lng=-78.64');
-	testWebAPI(api_near_filter, '/near?lat=35.78&lng=-78.64&dst=2&lmt=4');
+	//testWebAPI(api_near_filter, '/near?lat=35.78&lng=-78.64&dst=2&lmt=4');
 	testDB(people_nearby_limits);
 }
 
@@ -19,21 +19,22 @@ run : function () {
 function api_all_data (json) {
     assert_equal(20, json.results.length, "api_all_data");
 }
-function api_near (json) {
-	assert_equal(2, json.results.length, "api_near");
+function api_near(json) {
+	assert_equal(C.DEFAULT.LIMIT, json.results.length, "api_near");
 }
 function api_near_place (json) {
-	assert_equal(2, json.results.length, "api_near_place");
+	assert_equal(C.DEFAULT.LIMIT, json.results.length, "api_near_place");
 }
 function api_near_filter (json) {
-	assert_equal(2, json.results.length, "api_near_filter");
+	assert_equal(4, json.results.length, "api_near_filter");
 }
 
 // DB TEST SUITE
 function people_nearby_limits(db) {
+	var limit = 3;
 	var people = require(C.PEOPLE);
-	people.nearby(db, C.RALEIGH, 1, 3, function (response, json) {
-		assert_equal(3, json.results.length, "db_people_nearby_limits");
+	people.nearby(db, C.RALEIGH, C.DEFAULT.DISTANCE, limit, function (response, json) {
+		assert_equal(limit, json.results.length, "db_people_nearby_limits");
 	}, null);
 }
 
@@ -64,5 +65,5 @@ function testDB(testMethod) {
 function assert_equal(expected, actual, message) {
 	assert.equal(expected, actual,
 		"failed: " + message + " (expected: " + expected + " actual: " + actual + ")");
-	console.log("passed:", message);
+	C.LOG.PASS(message);
 }
