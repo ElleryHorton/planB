@@ -3,6 +3,41 @@
 var C = require('../const.js');
 var assert = require('assert');
 
+module.exports = {
+
+run : function () {
+	testWebAPI(api_all_data, '/all');
+	testWebAPI(api_near, '/near');
+	testWebAPI(api_near_place, '/near?lat=35.78&lng=-78.64');
+	testWebAPI(api_near_filter, '/near?lat=35.78&lng=-78.64&dst=2&lmt=4');
+	testDB(people_nearby_limits);
+}
+
+}
+
+// WebAPI TEST SUITE
+function api_all_data (json) {
+    assert_equal(20, json.results.length, "api_all_data");
+}
+function api_near (json) {
+	assert_equal(2, json.results.length, "api_near");
+}
+function api_near_place (json) {
+	assert_equal(2, json.results.length, "api_near_place");
+}
+function api_near_filter (json) {
+	assert_equal(2, json.results.length, "api_near_filter");
+}
+
+// DB TEST SUITE
+function people_nearby_limits(db) {
+	var people = require(C.PEOPLE);
+	people.nearby(db, C.RALEIGH, 1, 3, function (response, json) {
+		assert_equal(3, json.results.length, "db_people_nearby_limits");
+	}, null);
+}
+
+// TEST HARNESSES
 function testWebAPI(testMethod, path) {
 	var http = require('http');
 	var options = {
@@ -27,35 +62,7 @@ function testDB(testMethod) {
 }
 
 function assert_equal(expected, actual, message) {
-	assert.equal(expected, actual);
+	assert.equal(expected, actual,
+		"failed: " + message + " (expected: " + expected + " actual: " + actual + ")");
 	console.log("passed:", message);
-}
-
-// WebAPI TEST SUITE
-function api_all_data (json) {
-    assert_equal(20, json.results.length, "api_all_data");
-}
-function api_nearby_limits (json) {
-	assert_equal(2, json.results.length, "api_nearby_limits");
-}
-
-// DB TEST SUITE
-function people_nearby_limits(db) {
-	var people = require(C.PEOPLE);
-	people.nearby(db, C.RALEIGH, 1, 2, function (response, json) {
-		assert_equal(2, json.results.length, "test_people_nearby_limits");
-	}, null);
-}
-function people_add_remove(db) {
-}
-
-module.exports = {
-
-run : function () {
-	testWebAPI(api_all_data, '/all');
-	testWebAPI(api_nearby_limits, '/near');
-	testDB(people_nearby_limits);
-	testDB(people_add_remove);
-}
-
 }

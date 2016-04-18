@@ -16,7 +16,31 @@ app.get(C.ROUTE.ROOT, function (request, response) {
 });
 app.get(C.ROUTE.NEAR, function (request, response) {
   var core = require(C.CORE);
-  core.nearby(handleResponse, response);
+  core.near(handleResponse, response);
+});
+/*
+app.get(C.ROUTE.NEAR, function (request, response) {
+  var core = require(C.CORE);
+  if (request.query.length == 0) {
+    core.near(handleResponse, response);
+  } else if ((typeof request.query.dst) == 'undefined' || (typeof request.query.lmt) == 'undefined') {
+    var place = { location: [request.query.lat, request.query.lng] };
+    core.near_place(place, handleResponse, response);
+  } else {
+    var place = { location: [request.query.lat, request.query.lng] };
+    core.near_filter(place, request.query.dst, request.query.lmt, handleResponse, response);
+  }
+});
+*/
+app.get(C.ROUTE.NEAR_PLACE, function (request, response) {
+  var core = require(C.CORE);
+  var place = { location: [req.params.lat, req.params.lng] };
+  core.near_place(place, handleResponse, response);
+});
+app.get(C.ROUTE.NEAR_FILTER, function (request, response) {
+  var core = require(C.CORE);
+  var place = { location: [req.params.lat, req.params.lng] };
+  core.near_filter(place, req.params.dst, req.params.lmt, handleResponse, response);
 });
 app.get(C.ROUTE.ALL, function (request, response) {
   var testdata = require(C.TESTDATA);

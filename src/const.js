@@ -16,10 +16,12 @@ NAME		: {
 
 // webserver config
 ROUTE		: {
-			ROOT	: "/",
-			NEAR	: "/near",
-			ALL	: "/all",
-			ADD	: "/add"
+			ROOT		: "/",
+			NEAR		: "/near",
+			NEAR_PLACE	: "/near_place/:lat/:lng",
+			NEAR_FILTER	: "/near_filter/:lat/:lng/:dst/:lmt",
+			ALL			: "/all",
+			ADD			: "/add"
 },
 PORT		: {
 			MAIN	: 8081
