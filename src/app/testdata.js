@@ -62,11 +62,6 @@ function insertPeopleInto(collection, callback) {
 
 module.exports = {
 
-LatLng : {
-	lat : function() { return C.RALEIGH.location[0]; },
-	lng : function() { return C.RALEIGH.location[1]; }
-},
-
 purge : function (db) {
 	var people = require(C.PEOPLE);
 	var collection = db.collection(C.NAME.PEOPLE);

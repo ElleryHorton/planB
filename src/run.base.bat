@@ -12,11 +12,11 @@ if "%~1"=="-FIXED_CTRL_C" (
 
 :: STATEFUL
 node tests\_purge.js
-node tests\_setup.js
+node tests\_configure.js
 node tests\add.js
 
 :: STATELESS
 node tests\_purge.js
-node tests\_setup.js
-node tests\_init.js
+node tests\_configure.js
+node tests\_insertTestData.js
 node app\index.js

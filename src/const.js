@@ -31,6 +31,11 @@ PORT	: {
 // locations
 RALEIGH	: { name: "Raleigh", location: [35.7796, -78.6382] },
 
+LatLng : {
+	lat : function() { return module.exports.RALEIGH.location[0]; },
+	lng : function() { return module.exports.RALEIGH.location[1]; }
+},
+
 // defaults and limits
 DEFAULT	: {
             DISTANCE    : 1,
@@ -51,7 +56,10 @@ LOG		: {
             FAIL        : function (msg) { console.log("\x1b[31m%s%s%s\x1b[0m", "X ", "failed: ", msg) },
             PASS        : function (msg) { console.log("\x1b[32m%s%s%s\x1b[0m", "✓ ", "passed: ", msg) },
             ERR         : function (msg) { console.log("\x1b[5m\x1b[31m%s%s%s\x1b[0m", "! ", "error:  ", msg) }
-}
+},
+
+NOT_OK  :   "{\"ok\":false}"
+
 }
 
 var ICON_COL = "  ";

@@ -29,9 +29,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{F5B5E31C-1E0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2C7CFEBC-E533-41BE-B2EB-E9BF7A32D2C3}"
 	ProjectSection(SolutionItems) = preProject
-		src\tests\_init.js = src\tests\_init.js
+		src\tests\_configure.js = src\tests\_configure.js
+		src\tests\_insertTestData.js = src\tests\_insertTestData.js
 		src\tests\_purge.js = src\tests\_purge.js
-		src\tests\_setup.js = src\tests\_setup.js
 		src\tests\add.js = src\tests\add.js
 	EndProjectSection
 EndProject

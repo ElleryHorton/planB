@@ -2,10 +2,10 @@ var C = require('../const.js');
 var assert = require(C.ASSERT);
 
 function verifyLocationExists(response, data) {
-	assert.equal(1, data.count, "test_add_LatLng_countIs1");
+	assert.equal(1, data.count, "test_add_countIs1");
 	var location = data.results[0].location;
-	assert.notEqual(location, null, "test_add_LatLng_locationNotNull");
-	assert.equal(2, location.length, "test_add_LatLng_locationLengthIs2");
+	assert.notEqual(location, null, "test_add_locationNotNull");
+	assert.equal(2, location.length, "test_add_locationLengthIs2");
 }
 
 function testAdd(response, data) {
@@ -15,4 +15,4 @@ function testAdd(response, data) {
 var core = require(C.CORE);
 var testdata = require(C.TESTDATA);
 var response = "";
-core.add(testdata.LatLng, testAdd, response);
+core.add(C.RALEIGH, testAdd, response);

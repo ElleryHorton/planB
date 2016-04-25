@@ -36,9 +36,13 @@ app.get(C.ROUTE.ALL, function (request, response) {
   testdata.all(handleResponse, response);
 });
 app.get(C.ROUTE.ADD, function (request, response) {
-  var core = require(C.CORE);
-  var testdata = require(C.TESTDATA);
-  core.add(testdata.LatLng, handleResponse, response);
+  if ((typeof request.query.lat) == 'undefined' || (typeof request.query.lng) == 'undefined') {
+    response.end(C.NOT_OK);
+  } else {
+    var core = require(C.CORE);
+    var place = { location: [parseFloat(request.query.lat), parseFloat(request.query.lng)] };
+    core.add(place, handleResponse, response);
+  }
 });
 
 // server start

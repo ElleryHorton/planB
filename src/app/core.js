@@ -26,10 +26,8 @@ near_filter : function (place, distance, limit, logMethod, response) {
 	});
 },
 
-add : function (LatLng, logMethod, response) {
+add : function (place, logMethod, response) {
 	var places = require(C.PLACES);
-	var place = places.toPlace(LatLng);
-	
 	DAL.execute(function (db) {
 		var people = require(C.PEOPLE);
 		people.add(db, place, logMethod, response);

@@ -6,10 +6,11 @@ var assert = require(C.ASSERT);
 module.exports = {
 
 run : function () {
-	testWebAPI(api_all_data, '/all');
-	testWebAPI(api_near, '/near');
-	testWebAPI(api_near_place, '/near?lat=35.78&lng=-78.64');
-	testWebAPI(api_near_filter, '/near?lat=35.78&lng=-78.64&dst=2&lmt=4');
+	testWebAPI(positiveTest, api_all_data, '/all');
+	testWebAPI(positiveTest, api_near, '/near');
+	testWebAPI(positiveTest, api_near_place, '/near?lat=35.78&lng=-78.64');
+	testWebAPI(positiveTest, api_near_filter, '/near?lat=35.78&lng=-78.64&dst=2&lmt=4');
+	testWebAPI(negativeTest, api_add, '/add');
 	testDB(people_nearby_limits);
 }
 
@@ -28,6 +29,9 @@ function api_near_place (json) {
 function api_near_filter (json) {
 	assert.equal(4, json.results.length, "api_near_filter");
 }
+function api_add (json) {
+	assert.equal(C.NOT_OK, JSON.stringify(json), "api_add");
+}
 
 // DB TEST SUITE
 function people_nearby_limits(db) {
@@ -38,8 +42,8 @@ function people_nearby_limits(db) {
 	}, null);
 }
 
-// TEST HARNESSES
-function testWebAPI(testMethod, path) {
+// WEB TEST HARNESS
+function testWebAPI(testPosOrNeg, testMethod, path) {
 	var http = require('http');
 	var options = {
 	  hostname: 'localhost',
@@ -50,12 +54,7 @@ function testWebAPI(testMethod, path) {
 	var req = http.request(options, function(res) {
 	  res.setEncoding('utf8');
 	  res.on('data', function (data) {
-		  var json = JSON.parse(data);
-		  if (json.ok) {
-			  testMethod(json);
-		  } else {
-			  C.LOG.ERR(data);
-		  }
+		  testPosOrNeg(testMethod, data);
 	  });
 	});
 	req.on('error', function(e) {
@@ -64,6 +63,21 @@ function testWebAPI(testMethod, path) {
 	req.end();
 }
 
+function positiveTest(testMethod, data) {
+	var json = JSON.parse(data);
+	if (json.ok) {
+		testMethod(json);
+	} else {
+		C.LOG.ERR(data);
+	}
+}
+
+function negativeTest(testMethod, data) {
+	var json = JSON.parse(data);
+	testMethod(json);
+}
+
+// DAL TEST HARNESS
 function testDB(testMethod) {
 	var DAL = require(C.DAL);
 	DAL.execute(testMethod);
