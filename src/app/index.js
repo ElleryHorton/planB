@@ -7,7 +7,12 @@ var fs = require('fs');
 
 // routing
 function handleResponse(response, data) {
-	response.end(JSON.stringify(data));
+  var json = JSON.stringify(data);
+  if (json.ok) {
+	  response.end(json);
+  } else {
+    response.end(json);
+  }
 }
 app.get(C.ROUTE.ROOT, function (request, response) {
    fs.readFile(__dirname + "/" + "users.json", 'utf8', function (err, data) {
@@ -16,25 +21,15 @@ app.get(C.ROUTE.ROOT, function (request, response) {
 });
 app.get(C.ROUTE.NEAR, function (request, response) {
   var core = require(C.CORE);
-  //if (request.query.length == 0) {
+  if ((typeof request.query.lat) == 'undefined' || (typeof request.query.lng) == 'undefined') {
     core.near(handleResponse, response);
-  //} else if ((typeof request.query.dst) == 'undefined' || (typeof request.query.lmt) == 'undefined') {
-  //  var place = { location: [request.query.lat, request.query.lng] };
-  //  core.near_place(place, handleResponse, response);
-  //} else {
-  //  var place = { location: [request.query.lat, request.query.lng] };
-  //  core.near_filter(place, request.query.dst, request.query.lmt, handleResponse, response);
-  //}
-});
-app.get(C.ROUTE.NEAR_PLACE, function (request, response) {
-  var core = require(C.CORE);
-  var place = { location: [req.params.lat, req.params.lng] };
-  core.near_place(place, handleResponse, response);
-});
-app.get(C.ROUTE.NEAR_FILTER, function (request, response) {
-  var core = require(C.CORE);
-  var place = { location: [req.params.lat, req.params.lng] };
-  core.near_filter(place, req.params.dst, req.params.lmt, handleResponse, response);
+  } else if ((typeof request.query.dst) == 'undefined' || (typeof request.query.lmt) == 'undefined') {
+    var place = { location: [parseFloat(request.query.lat), parseFloat(request.query.lng)] };
+    core.near_place(place, handleResponse, response);
+  } else {
+    var place = { location: [parseFloat(request.query.lat), parseFloat(request.query.lng)] };
+    core.near_filter(place, parseFloat(request.query.dst), parseInt(request.query.lmt), handleResponse, response);
+  }
 });
 app.get(C.ROUTE.ALL, function (request, response) {
   var testdata = require(C.TESTDATA);

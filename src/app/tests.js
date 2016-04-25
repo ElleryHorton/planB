@@ -9,7 +9,7 @@ run : function () {
 	testWebAPI(api_all_data, '/all');
 	testWebAPI(api_near, '/near');
 	testWebAPI(api_near_place, '/near?lat=35.78&lng=-78.64');
-	//testWebAPI(api_near_filter, '/near?lat=35.78&lng=-78.64&dst=2&lmt=4');
+	testWebAPI(api_near_filter, '/near?lat=35.78&lng=-78.64&dst=2&lmt=4');
 	testDB(people_nearby_limits);
 }
 
@@ -49,10 +49,17 @@ function testWebAPI(testMethod, path) {
 	};
 	var req = http.request(options, function(res) {
 	  res.setEncoding('utf8');
-	  res.on('data', function (data) {testMethod(JSON.parse(data))} );
+	  res.on('data', function (data) {
+		  var json = JSON.parse(data);
+		  if (json.ok) {
+			  testMethod(json);
+		  } else {
+			  C.LOG.ERR(data);
+		  }
+	  });
 	});
 	req.on('error', function(e) {
-	  assert(false, JSON.stringify(options));
+		assert(false, JSON.stringify(options));
 	});
 	req.end();
 }
@@ -63,7 +70,9 @@ function testDB(testMethod) {
 }
 
 function assert_equal(expected, actual, message) {
-	assert.equal(expected, actual,
-		"failed: " + message + " (expected: " + expected + " actual: " + actual + ")");
-	C.LOG.PASS(message);
+	if (expected == actual) {
+		C.LOG.PASS(message);
+	} else {
+		C.LOG.FAIL(message + " (expected: " + expected + " actual: " + actual + ")");
+	}
 }

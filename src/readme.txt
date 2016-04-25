@@ -1,12 +1,10 @@
 INSTALL
 	firefox for geolocation
 	nodejs
-	RoboMongo
 	mongodb
+	RoboMongo
 
 COMMANDS
-	node index.js
+	npm install
 	npm install mongodb
-	db.products.insert( { item: "card", qty: 15 } )
-	db.products.find()
-
+	run.bat -> run.base.bat -> node app\index.js

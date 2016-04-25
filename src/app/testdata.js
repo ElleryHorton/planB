@@ -97,12 +97,20 @@ all : function (logMethod, response) {
 		var people = db.collection(C.NAME.PEOPLE);
 		people.find().toArray(function(err, items) {
 			var r = {};
-			if (items != null) {
-				r.count = items.length;
-				r.results = items;
+			if (err) {
+			    r.count = 0;
+			    r.results = null;
+			    r.ok = false;
 			} else {
-				r.count = 0;
-				r.results = null;
+			    if (items != null) {
+			        r.count = items.length;
+			        r.results = items;
+			        r.ok = true;
+			    } else {
+			        r.count = 0;
+			        r.results = null;
+			        r.ok = true;
+			    }
 			}
 			db.close();
 			logMethod(response, r);

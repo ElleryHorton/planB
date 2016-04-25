@@ -28,7 +28,7 @@ results : function(err, result, db, logMethod, response) {
 		r.ok = true;
 		r.results = result.results;
 	} else {
-		r.ok = true;
+		r.ok = false;
 		r.results = null;
 	}
 	db.close();
