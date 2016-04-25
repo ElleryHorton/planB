@@ -1,7 +1,7 @@
 // tests
 
 var C = require('../const.js');
-var assert = require('assert');
+var assert = require(C.ASSERT);
 
 module.exports = {
 
@@ -17,16 +17,16 @@ run : function () {
 
 // WebAPI TEST SUITE
 function api_all_data (json) {
-    assert_equal(20, json.results.length, "api_all_data");
+    assert.equal(20, json.results.length, "api_all_data");
 }
 function api_near(json) {
-	assert_equal(C.DEFAULT.LIMIT, json.results.length, "api_near");
+	assert.equal(C.DEFAULT.LIMIT, json.results.length, "api_near");
 }
 function api_near_place (json) {
-	assert_equal(C.DEFAULT.LIMIT, json.results.length, "api_near_place");
+	assert.equal(C.DEFAULT.LIMIT, json.results.length, "api_near_place");
 }
 function api_near_filter (json) {
-	assert_equal(4, json.results.length, "api_near_filter");
+	assert.equal(4, json.results.length, "api_near_filter");
 }
 
 // DB TEST SUITE
@@ -34,7 +34,7 @@ function people_nearby_limits(db) {
 	var limit = 3;
 	var people = require(C.PEOPLE);
 	people.nearby(db, C.RALEIGH, C.DEFAULT.DISTANCE, limit, function (response, json) {
-		assert_equal(limit, json.results.length, "db_people_nearby_limits");
+		assert.equal(limit, json.results.length, "db_people_nearby_limits");
 	}, null);
 }
 
@@ -59,7 +59,7 @@ function testWebAPI(testMethod, path) {
 	  });
 	});
 	req.on('error', function(e) {
-		assert(false, JSON.stringify(options));
+		C.LOG.ERR(JSON.stringify(options));
 	});
 	req.end();
 }
@@ -67,12 +67,4 @@ function testWebAPI(testMethod, path) {
 function testDB(testMethod) {
 	var DAL = require(C.DAL);
 	DAL.execute(testMethod);
-}
-
-function assert_equal(expected, actual, message) {
-	if (expected == actual) {
-		C.LOG.PASS(message);
-	} else {
-		C.LOG.FAIL(message + " (expected: " + expected + " actual: " + actual + ")");
-	}
 }

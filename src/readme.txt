@@ -3,6 +3,7 @@ INSTALL
 	nodejs
 	mongodb
 	RoboMongo
+	VS Code (change SaveAs keyboard shortcut to SaveAll)
 
 COMMANDS
 	npm install

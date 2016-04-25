@@ -3,6 +3,7 @@
 module.exports = {
 
 // libraries
+ASSERT  : "../app/assert.js",
 CORE	: "../app/core.js",
 DAL		: "../app/dal.js",
 TESTDATA: "../app/testdata.js",

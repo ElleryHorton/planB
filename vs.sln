@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BB9699DD-FF9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{F5B5E31C-1E0E-4D7E-B3B0-C35C3C651D92}"
 	ProjectSection(SolutionItems) = preProject
+		src\app\assert.js = src\app\assert.js
 		src\app\core.js = src\app\core.js
 		src\app\dal.js = src\app\dal.js
 		src\app\index.js = src\app\index.js

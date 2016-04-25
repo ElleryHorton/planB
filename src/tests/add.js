@@ -1,17 +1,11 @@
 var C = require('../const.js');
-var assert = require('assert');
-
-function assert_notEqual(expected, actual, message) {
-    assert.notEqual(expected, actual);
-    C.LOG.PASS(message);
-}
+var assert = require(C.ASSERT);
 
 function verifyLocationExists(response, data) {
-	assert.equal(1, data.count);
+	assert.equal(1, data.count, "test_add_LatLng_countIs1");
 	var location = data.results[0].location;
-	assert.notEqual(location, null);
-	assert.equal(2, location.length);
-	C.LOG.PASS("test_add_LatLng");
+	assert.notEqual(location, null, "test_add_LatLng_locationNotNull");
+	assert.equal(2, location.length, "test_add_LatLng_locationLengthIs2");
 }
 
 function testAdd(response, data) {
