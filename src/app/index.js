@@ -5,6 +5,17 @@ var express = require('express');
 var app = express();
 var fs = require('fs');
 
+// input
+function bound(value, min, max) {
+  return (value < min) ? min : ((value > max) ? max : value);
+}
+function parseLimit(value) {
+  return bound(parseInt(value), C.MIN.LIMIT, C.MAX.LIMIT);
+}
+function parseDistance(value) {
+  return bound(parseFloat(value), C.MIN.DISTANCE, C.MAX.DISTANCE);
+}
+
 // routing
 function handleResponse(response, data) {
   var json = JSON.stringify(data);
@@ -28,12 +39,12 @@ app.get(C.ROUTE.NEAR, function (request, response) {
     core.near_place(place, handleResponse, response);
   } else {
     var place = { location: [parseFloat(request.query.lat), parseFloat(request.query.lng)] };
-    core.near_filter(place, parseFloat(request.query.dst), parseInt(request.query.lmt), handleResponse, response);
+    core.near_filter(place, parseDistance(request.query.dst), parseLimit(request.query.lmt), handleResponse, response);
   }
 });
 app.get(C.ROUTE.ALL, function (request, response) {
-  var testdata = require(C.TESTDATA);
-  testdata.all(handleResponse, response);
+  var core = require(C.CORE);
+  core.near_filter(C.RALEIGH, parseDistance(100), parseLimit(100), handleResponse, response);
 });
 app.get(C.ROUTE.ADD, function (request, response) {
   if ((typeof request.query.lat) == 'undefined' || (typeof request.query.lng) == 'undefined') {

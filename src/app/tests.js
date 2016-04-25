@@ -10,15 +10,17 @@ run : function () {
 	testWebAPI(positiveTest, api_near, '/near');
 	testWebAPI(positiveTest, api_near_place, '/near?lat=35.78&lng=-78.64');
 	testWebAPI(positiveTest, api_near_filter, '/near?lat=35.78&lng=-78.64&dst=2&lmt=4');
+	testWebAPI(positiveTest, api_near_filter_bounds_lmt, '/near?lat=35.78&lng=-78.64&dst=2&lmt=200');
 	testWebAPI(negativeTest, api_add, '/add');
 	testDB(people_nearby_limits);
+	testDB(testdata_all);
 }
 
 }
 
 // WebAPI TEST SUITE
 function api_all_data (json) {
-    assert.equal(20, json.results.length, "api_all_data");
+    assert.equal(10, json.results.length, "api_all_data");
 }
 function api_near(json) {
 	assert.equal(C.DEFAULT.LIMIT, json.results.length, "api_near");
@@ -28,6 +30,9 @@ function api_near_place (json) {
 }
 function api_near_filter (json) {
 	assert.equal(4, json.results.length, "api_near_filter");
+}
+function api_near_filter_bounds_lmt (json) {
+	assert.equal(10, json.results.length, "api_near_filter_bounds_lmt");
 }
 function api_add (json) {
 	assert.equal(C.NOT_OK, JSON.stringify(json), "api_add");
@@ -40,6 +45,14 @@ function people_nearby_limits(db) {
 	people.nearby(db, C.RALEIGH, C.DEFAULT.DISTANCE, limit, function (response, json) {
 		assert.equal(limit, json.results.length, "db_people_nearby_limits");
 	}, null);
+}
+
+function testdata_all(db) {
+	var testdata = require(C.TESTDATA);
+	var response = "";
+	testdata.all(function (response, json) {
+		assert.equal(200, json.count, "db_testdata_all");
+	}, response);
 }
 
 // WEB TEST HARNESS

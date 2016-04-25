@@ -1,9 +1,9 @@
 var C = require('../const.js');
 var assert = require(C.ASSERT);
 
-function verifyLocationExists(response, data) {
-	assert.equal(1, data.count, "test_add_countIs1");
-	var location = data.results[0].location;
+function verifyLocationExists(response, json) {
+	assert.equal(1, json.count, "test_add_countIs1");
+	var location = json.results[0].location;
 	assert.notEqual(location, null, "test_add_locationNotNull");
 	assert.equal(2, location.length, "test_add_locationLengthIs2");
 }

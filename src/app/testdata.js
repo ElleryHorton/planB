@@ -11,21 +11,28 @@ function randomNumber(min, max, format) {
 	return Math.floor((Math.random() * max) + min) * plusOrMinus / (1/format); 
 }
 
-function randomPlaces(place, count, offset, distance, format) {
+function randomPlaces(place, count, offset, distance, spacing) {
 	var places = require(C.PLACES);
 	var locations = [];
 	for (var i = 0; i < count; i++)
 	{
-		var newLat = place.location[0] + randomNumber(offset, distance, format);
-		var newLng = place.location[1] + randomNumber(offset, distance, format);
+		var newLat = place.location[0] + randomNumber(offset, distance, spacing);
+		var newLng = place.location[1] + randomNumber(offset, distance, spacing);
 		locations.push(places.createPlace(i.toString(), newLat, newLng));
 	}
 	return locations;
 }
 
+function randomPlace(place, offset, distance, spacing) {
+	var places = require(C.PLACES);
+	var newLat = place.location[0] + randomNumber(offset, distance, spacing);
+	var newLng = place.location[1] + randomNumber(offset, distance, spacing);
+	return places.createPlace(i.toString(), newLat, newLng);
+}
+
 function insertPlacesInto(collection, callback) {	
 	var places = require(C.PLACES);
-	var count = 20;
+	var count = 200;
 	var min = 0;
 	var max = 10;
 	collection.insert(randomPlaces(C.RALEIGH, count, min, max, places.SPACING.CLOSE), callback);
@@ -33,9 +40,11 @@ function insertPlacesInto(collection, callback) {
 
 function insertPeopleInto(collection, callback) {	
 	var people = require(C.PEOPLE);
-	
+	var min = 0;
+	var max = 10;
+	var spacing = places.SPACING.CLOSE;
 	var peeps = [
-		people.create(1, 2),
+		people.create(randomPlace(C.RALEIGH, min, max, spacing)),
 		people.create(1.1, 2.1),
 		people.create(1.1, 2.1),
 		people.create(1.1, 2.1),

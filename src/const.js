@@ -39,11 +39,11 @@ LatLng : {
 // defaults and limits
 DEFAULT	: {
             DISTANCE    : 1,
-            LIMIT		: 2
+            LIMIT		: 10
 },
 MAX		: {
-            DISTANCE    : 1,
-            LIMIT		: 2
+            DISTANCE    : 5,
+            LIMIT		: 10
 },
 MIN		: {
             DISTANCE    : 0,
