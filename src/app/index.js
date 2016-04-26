@@ -1,9 +1,11 @@
 // server, routing, and responding to requests
 
-var C = require('../const.js');
+var C = require("../const.js");
 var express = require('express');
 var app = express();
 var fs = require('fs');
+var core = require("../app/core.js");
+var tests = require("../app/tests.js");
 
 // input
 function bound(value, min, max) {
@@ -31,7 +33,6 @@ app.get(C.ROUTE.ROOT, function (request, response) {
    });
 });
 app.get(C.ROUTE.NEAR, function (request, response) {
-  var core = require(C.CORE);
   if ((typeof request.query.lat) == 'undefined' || (typeof request.query.lng) == 'undefined') {
     core.near(handleResponse, response);
   } else if ((typeof request.query.dst) == 'undefined' || (typeof request.query.lmt) == 'undefined') {
@@ -43,14 +44,12 @@ app.get(C.ROUTE.NEAR, function (request, response) {
   }
 });
 app.get(C.ROUTE.ALL, function (request, response) {
-  var core = require(C.CORE);
   core.near_filter(C.RALEIGH, parseDistance(100), parseLimit(100), handleResponse, response);
 });
 app.get(C.ROUTE.ADD, function (request, response) {
   if ((typeof request.query.lat) == 'undefined' || (typeof request.query.lng) == 'undefined') {
     response.end(C.NOT_OK);
   } else {
-    var core = require(C.CORE);
     var place = { location: [parseFloat(request.query.lat), parseFloat(request.query.lng)] };
     core.add(place, handleResponse, response);
   }
@@ -62,6 +61,5 @@ var server = app.listen(C.PORT.MAIN, function () {
   var port = server.address().port
   C.LOG.LOW("Example app listening at http://" + host + ":" + port)
   
-  var tests = require(C.TESTS);
   tests.run();
 });

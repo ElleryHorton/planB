@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BB9699DD-FF9
 	ProjectSection(SolutionItems) = preProject
 		src\.gitignore = src\.gitignore
 		src\const.js = src\const.js
+		src\db.bat = src\db.bat
 		src\package.json = src\package.json
 		src\readme.txt = src\readme.txt
 		src\run.base.bat = src\run.base.bat

@@ -1,23 +1,23 @@
 // db pass-thru layer to handle connecting and errors
 
-var C = require('../const.js');
+var C = require("../const.js");
+var mongodb = require('mongodb');
 
 module.exports = {
 
-execute : function (callback) {
-	var mongodb = require('mongodb');
+execute: function (callback_db) {
 	var MongoClient = mongodb.MongoClient;
 	var url = 'mongodb://nc-dev-1028:27017/test';
 	MongoClient.connect(url, function (err, db) {
 		if (err) {
 			C.LOG.ERR(err);
 		} else {
-			callback(db);
+		    callback_db(db);
 		}
 	});
 },
 
-results : function(err, result, db, logMethod, response) {
+results: function (err, result, db, responseHandler, response) {
 	var r = {};
 	if (err) {
 		r.err = err;
@@ -32,10 +32,10 @@ results : function(err, result, db, logMethod, response) {
 		r.results = null;
 	}
 	db.close();
-	logMethod(response, r);
+	responseHandler(response, r);
 },
 
-results_obj : function(err, data, db, logMethod, response) {
+results_obj: function (err, data, db, responseHandler, response) {
 	var r = {};
 	if (err) {
 		r.err = err;
@@ -46,10 +46,10 @@ results_obj : function(err, data, db, logMethod, response) {
 		r.results = data;
 	}
 	db.close();
-	logMethod(response, r);
+	responseHandler(response, r);
 },
 
-results_ok : function(err, data, db, logMethod, response) {
+results_ok: function (err, data, db, responseHandler, response) {
 	var r = {};
 	if (err) {
 		r.ok = false;
@@ -57,7 +57,7 @@ results_ok : function(err, data, db, logMethod, response) {
 		r.ok = true;
 	}
 	db.close();
-	logMethod(response, r);
+	responseHandler(response, r);
 }
 
 }

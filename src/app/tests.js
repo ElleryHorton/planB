@@ -1,7 +1,9 @@
 // tests
 
-var C = require('../const.js');
-var assert = require(C.ASSERT);
+var C = require("../const.js");
+var assert = require("../app/assert.js");
+var people = require("../app/people.js");
+var testdata = require("../app/testdata.js");
 
 module.exports = {
 
@@ -41,18 +43,15 @@ function api_add (json) {
 // DB TEST SUITE
 function people_nearby_limits(db) {
 	var limit = 3;
-	var people = require(C.PEOPLE);
 	people.nearby(db, C.RALEIGH, C.DEFAULT.DISTANCE, limit, function (response, json) {
 		assert.equal(limit, json.results.length, "db_people_nearby_limits");
 	}, null);
 }
 
 function testdata_all(db) {
-	var testdata = require(C.TESTDATA);
-	var response = "";
-	testdata.all(function (response, json) {
+	testdata.all(db, function (json) {
 		assert.equal(200, json.count, "db_testdata_all");
-	}, response);
+	});
 }
 
 // WEB TEST HARNESS
@@ -92,6 +91,6 @@ function negativeTest(testMethod, data) {
 
 // DAL TEST HARNESS
 function testDB(testMethod) {
-	var DAL = require(C.DAL);
+	var DAL = require("../app/dal.js");
 	DAL.execute(testMethod);
 }

@@ -1,6 +1,8 @@
 // test data library
 
-var C = require('../const.js');
+var C = require("../const.js");
+var places = require("../app/places.js");
+var people = require("../app/people.js");
 
 function log_test_data_inserted(response, data) {
 	C.LOG.LOW("Test Data inserted");
@@ -12,7 +14,6 @@ function randomNumber(min, max, format) {
 }
 
 function randomPlaces(place, count, offset, distance, spacing) {
-	var places = require(C.PLACES);
 	var locations = [];
 	for (var i = 0; i < count; i++)
 	{
@@ -24,22 +25,19 @@ function randomPlaces(place, count, offset, distance, spacing) {
 }
 
 function randomPlace(place, offset, distance, spacing) {
-	var places = require(C.PLACES);
 	var newLat = place.location[0] + randomNumber(offset, distance, spacing);
 	var newLng = place.location[1] + randomNumber(offset, distance, spacing);
 	return places.createPlace(i.toString(), newLat, newLng);
 }
 
-function insertPlacesInto(collection, callback) {	
-	var places = require(C.PLACES);
+function insertPlacesInto(collection, callback_responseHandler) {	
 	var count = 200;
 	var min = 0;
 	var max = 10;
-	collection.insert(randomPlaces(C.RALEIGH, count, min, max, places.SPACING.CLOSE), callback);
+	collection.insert(randomPlaces(C.RALEIGH, count, min, max, places.SPACING.CLOSE), callback_responseHandler);
 }
 
-function insertPeopleInto(collection, callback) {	
-	var people = require(C.PEOPLE);
+function insertPeopleInto(collection, callback_responseHandler) {
 	var min = 0;
 	var max = 10;
 	var spacing = places.SPACING.CLOSE;
@@ -66,13 +64,12 @@ function insertPeopleInto(collection, callback) {
 		people.create(101.1, 102.1)
 	];
 	
-	collection.insert(peeps, callback);
+	collection.insert(peeps, callback_responseHandler);
 }
 
 module.exports = {
 
 purge : function (db) {
-	var people = require(C.PEOPLE);
 	var collection = db.collection(C.NAME.PEOPLE);
 	collection.drop();
 	C.LOG.LOW("Test Data purged");
@@ -80,7 +77,6 @@ purge : function (db) {
 },
 
 setup : function (db) {
-    var people = require(C.PEOPLE);
     var collection = db.collection(C.NAME.PEOPLE);
     collection.createIndex({ location: "2d" }, { background: false });
     C.LOG.LOW("Index Created: { location: \"2d\" }");
@@ -88,37 +84,33 @@ setup : function (db) {
 },
 
 insert : function (db) {
-	var people = require(C.PEOPLE);
 	var collection = db.collection(C.NAME.PEOPLE);
     //insertPeopleInto(
 	insertPlacesInto(collection,
         people.nearby(db, C.RALEIGH, 1, 4, log_test_data_inserted, null));
 },
 
-all : function (logMethod, response) {
-	var DAL = require(C.DAL);
-	DAL.execute(function (db) {
-		var people = db.collection(C.NAME.PEOPLE);
-		people.find().toArray(function(err, items) {
-			var r = {};
-			if (err) {
-			    r.count = 0;
-			    r.results = null;
-			    r.ok = false;
+all : function (db, callback_json) {
+	var people = db.collection(C.NAME.PEOPLE);
+	people.find().toArray(function(err, items) {
+		var r = {};
+		if (err) {
+			r.count = 0;
+			r.results = null;
+			r.ok = false;
+		} else {
+			if (items != null) {
+				r.count = items.length;
+				r.results = items;
+				r.ok = true;
 			} else {
-			    if (items != null) {
-			        r.count = items.length;
-			        r.results = items;
-			        r.ok = true;
-			    } else {
-			        r.count = 0;
-			        r.results = null;
-			        r.ok = true;
-			    }
+				r.count = 0;
+				r.results = null;
+				r.ok = true;
 			}
-			db.close();
-			logMethod(response, r);
-		});
+		}
+		db.close();
+		callback_json(r);
 	});
 },
 

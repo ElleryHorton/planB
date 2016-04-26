@@ -1,6 +1,6 @@
 // assert test methods
 
-var C = require('../const.js');
+var C = require("../const.js");
 
 module.exports = {
 

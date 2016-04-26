@@ -1,5 +1,5 @@
 // setup and configuration (database)
-var C = require('../const.js');
-var DAL = require(C.DAL);
-var testdata = require(C.TESTDATA);
+var C = require("../const.js");
+var DAL = require("../app/dal.js");
+var testdata = require("../app/testdata.js");
 DAL.execute(testdata.setup);
